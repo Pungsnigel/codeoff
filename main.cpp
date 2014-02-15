@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Piggy. All rights reserved.
 //
 
-#include <math.h>
 #include <unistd.h>
 #include <iostream>
 
