@@ -8,6 +8,8 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <cstring>
+#include <cstdlib>
 
 void startProcess(int *in, int *out, const char *cmd);
 
@@ -31,9 +33,10 @@ int main(int argc, const char * argv[])
     
     switch(fork())
     {
-        case -1: cerr << "Failed to fork";       break;              // error
-        case 0: startProcess(toFirst, fromFirst, argv[1]); break;     // Child proccess
-        default:                                                     // Main proccess
+        case -1: cerr << "Failed to fork";       break;                 // error
+        case 0: startProcess(toFirst, fromFirst, argv[1]); break;       // Child proccess
+        default:                                                        // Main proccess
+        sleep(1);
             switch(fork())
             {
                 case -1: cerr << "Failed to fork";          break;  // error
@@ -44,8 +47,17 @@ int main(int argc, const char * argv[])
             }
             break;
     }
-    
-    
+    const char *msg = "Hello from Main program! \n";
+    char buff [1024];
+    std::cout << "Writing to external programs" << std::endl;
+    write(toFirst[1], msg, strlen(msg));
+    write(toSecond[1], msg, strlen(msg));
+    sleep(4);
+    read(fromFirst[0], buff, 1024);
+    std::cout << "Main prog read: " << buff << "from first process" << std::endl;
+    read(fromSecond[0], buff, 1024);
+    std::cout << "Main prog read: " << buff << "from second process" << std::endl;
+    std::cout <<"Bertil" << std::endl;
     return 0;
 }
 
