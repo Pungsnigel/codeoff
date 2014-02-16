@@ -59,7 +59,7 @@ void startProcess(int *in, int *out,const char *cmd)
         dup2(out[1], 1);
         close(in[1]);    // Child process should not read from input-stream of main
         close(out[0]);   // Child process should not write from output-stream of main
-        execl(cmd,cmd, (char*) NULL);
+        execl("/bin/sh","sh","-c",cmd,NULL);
         std::cerr << "Something went wrong in excecuting command: " << cmd << std::endl;
         break;
     default:
