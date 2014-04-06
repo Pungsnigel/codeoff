@@ -39,7 +39,7 @@ int main(int argc, const char * argv[])
     return 0;
 }
 
-void startProcess(int *in, int *out,const char *cmd)
+void startProcess(int *in, int *out, const char *cmd)
 {
     switch(fork())
     {
